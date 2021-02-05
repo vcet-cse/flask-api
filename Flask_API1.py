@@ -11,7 +11,7 @@ import pymongo
 from pymongo import MongoClient
 import MAIN
 
-Client = MongoClient("mongodb://192.168.225.44:27017")
+Client = MongoClient("mongodb://192.168.43.159:27017")
 db = Client['Grain_Database']
 collection = db["grain_data"]
 
@@ -64,7 +64,7 @@ class Get_Image(Resource):
             return send_from_directory('.', filename)
 
 # Uploading files
-''' class FileUpload(Resource): 
+class FileUpload(Resource): 
 	def post(self):
 		target=os.path.join(UPLOAD_FOLDER,'uploaded_img')
 		if not os.path.isdir(target):
@@ -79,27 +79,12 @@ class Get_Image(Resource):
 		#print(fd)
 		fd['Grain_Type'] = str(filename)
 		collection.insert(fd)
+		#print(fd)
+		#return jsonify(fd)
+		#time.sleep(60)
 		return "Success"
-		#return jsonify({'data': "Hello"}) '''
+		#return jsonify({'data': "Hello"})
 
-# Uploading files
-class FileUpload(Resource): 
-	def post(self):
-		target=os.path.join(UPLOAD_FOLDER,'uploaded_img')
-		if not os.path.isdir(target):
-			os.mkdir(target)
-		print(request.files)
-		file = request.files['image']		
-		filename = secure_filename(file.filename)
-		rice_type = str(filename)
-		destination="/".join([target, "input_image.jpg"])
-		file.save(destination)
-		session['uploadFilePath']=destination
-		fd = MAIN.hi(rice_type)
-		fd['Grain_Type'] = str(filename)
-		return jsonify(fd)
-		#return "Ok"
-		
 # Uploading files
 class FileUpload_Web(Resource): 
 	def post(self):
@@ -137,7 +122,4 @@ api.add_resource(Get_Detailed_result, '/detailed_result')
 # driver function 
 if __name__ == '__main__':
     app.secret_key = os.urandom(24) 
-    app.run(debug=True, host='192.168.0.103',port=3001)
-
-
-
+    app.run(debug=True, host='192.168.225.44',port=3001)

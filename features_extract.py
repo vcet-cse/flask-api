@@ -18,7 +18,8 @@ def features_extract(rice_type):
     for f in os.listdir('extracted_grains'):
         img = cv2.imread('extracted_grains/'+f,0)
         ret,thresh = cv2.threshold(img,127,255,0)
-        im2,contours,hierarchy = cv2.findContours(thresh, 1, 2)
+        print(cv2.findContours(thresh, 1, 2));
+        contours,hierarchy = cv2.findContours(thresh, 1, 2)
         cnt = contours[0]
         M = cv2.moments(cnt)
 
